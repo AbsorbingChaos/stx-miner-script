@@ -18,6 +18,8 @@ sudo apt-get install -y build-essential cmake libssl-dev pkg-config jq
 
 # install nvm
 wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+# shellcheck source=src/.nvm/nvm.sh
+source $HOME/.nvm/nvm.sh
 # shellcheck source=src/.bashrc
 source $HOME/.bashrc
 
@@ -37,7 +39,7 @@ npx blockstack-cli@1.1.0-beta.1 make_keychain -t > ~/keychain.json
 
 # request tBTC from faucet using btcAddress from keychain
 # note: usually takes 1-2 min to complete, so we will sleep for 1min
-curl -X POST "https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/btc\?address\=`jq -r '.keyInfo .btcAddress' ~/keychain.json`"
+curl -X POST https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/btc\?address\="`jq -r '.keyInfo .btcAddress' ~/keychain.json`"
 sleep 60
 
 # download neon miner config file
