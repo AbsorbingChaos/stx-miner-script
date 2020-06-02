@@ -4,13 +4,15 @@ This repository contains a setup script to help automate (and hopefully simplify
 
 [Step 2: Running a Miner Node (Zero to Testnet Series)](https://app.sigle.io/whoabuddy.id.blockstack/Lqq5_aeI1A06l_FQ8s9Jv)
 
+Youtube video of the process: https://www.youtube.com/watch?v=VcqrxFW9HEQ
+
 ## Requirements
 
 Before starting, you will need to install Virtualbox and set up a virtual machine running Ubuntu Server. The specifications I used are listed below, and more information on this process can be found in the first part of my blog series:
 
 [Step 0: Virtualbox + Ubuntu (Zero to Testnet Series)](https://app.sigle.io/whoabuddy.id.blockstack/6ZSqK6yEwu5bqqGCjOZZH)
 
-__ADD IMAGE OF VIRTUAL MACHINE CONFIG HERE__
+![VirtualBox_Blockstack-AutoMiner_02_06_2020_09_19_05](https://user-images.githubusercontent.com/9038904/83544393-a81f9f00-a4b2-11ea-80c4-25e4ed3e9a35.png)
 
 ## Setup and Usage
 
