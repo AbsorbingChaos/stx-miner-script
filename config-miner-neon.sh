@@ -54,8 +54,8 @@ echo '{"id":"stacks","jsonrpc":"2.0","method":"listunspent","params":[0,9999999,
 sed -i "s/replace-with-btc-address/`jq -r '.keyInfo .btcAddress' ~/keychain.json`/g" ~/checkbalance.json
 
 until curl -v --data-binary '@checkbalance.json' -H 'content-type:text/plain;' "http://None:None@35.245.47.179:18443" | grep amount; do
-  printf 'tBTC balance not found - checking again in 60s'
-  sleep 60
+  printf 'tBTC balance not found - checking again in 3min - this is a good time to get coffee!'
+  sleep 180
 done
 
 # change working directory to stacks-blockchain repo
