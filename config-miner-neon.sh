@@ -40,14 +40,23 @@ npx blockstack-cli@1.1.0-beta.1 make_keychain -t > ~/keychain.json
 # request tBTC from faucet using btcAddress from keychain
 # note: usually takes 1-2 min to complete, so we will sleep for 1min
 curl -X POST https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/btc\?address\="`jq -r '.keyInfo .btcAddress' ~/keychain.json`"
-sleep 60
 
 # download neon miner config file
 # hosted on whoabuddydesign.com using Runkod for now
 curl -L https://whoabuddydesign.com/neon-miner-conf.toml --output ~/stacks-blockchain/testnet/stacks-node/conf/neon-miner-conf.toml
 
 # replace seed with privateKey from keychain
-sed -i "s/replace-with-your-private-key/`jq -r '.keyInfo .privateKey' keychain.json`/g" ./stacks-blockchain/testnet/stacks-node/conf/neon-miner-conf.toml
+sed -i "s/replace-with-your-private-key/`jq -r '.keyInfo .privateKey' ~/keychain.json`/g" ./stacks-blockchain/testnet/stacks-node/conf/neon-miner-conf.toml
+
+# check the tBTC balance before starting the miner
+# otherwise those UTXOs might not exist!
+echo '{"id":"stacks","jsonrpc":"2.0","method":"listunspent","params":[0,9999999,["replace-with-btc-address"],false,{"minimumAmount":"0.00000001"}]}' > ~/checkbalance.json
+sed -i "s/replace-with-btc-address/`jq -r '.keyInfo .btcAddress' ~/keychain.json`/g" ~/checkbalance.json
+
+until curl -v --data-binary '@checkbalance.json' -H 'content-type:text/plain;' "http://None:None@35.245.47.179:18443" | grep amount; do
+  printf '.'
+  sleep 15
+done
 
 # change working directory to stacks-blockchain repo
 cd ~/stacks-blockchain
