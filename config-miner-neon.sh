@@ -7,7 +7,7 @@
 
 ###############
 # INIT SETUP  #
-###############
+###############https://raw.githubusercontent.com/AbsorbingChaos/bks-setup-miner/upd/scripts/config-miner-neon.sh
 
 set -o errexit
 set -o pipefail
@@ -39,7 +39,7 @@ npx blockstack-cli@1.1.0-beta.1 make_keychain -t > ~/keychain.json
 
 # request tBTC from faucet using btcAddress from keychain
 # note: usually takes 1-2 min to complete, so we will sleep for 1min
-curl -X POST "https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/btc\?address\=`jq -r '.keyInfo .btcAddress' ~/keychain.json`"
+curl -X POST https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/btc\?address\="`jq -r '.keyInfo .btcAddress' ~/keychain.json`"
 sleep 60
 
 # download neon miner config file
