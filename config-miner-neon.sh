@@ -33,14 +33,14 @@ nvm install node
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 source $HOME/.cargo/env
 
-# clone stacks-blockchain
+# clone stacks-blockchain repo
 git clone https://github.com/blockstack/stacks-blockchain.git ~/stacks-blockchain
 
 # create a keychain including privateKey and btcAddress
 npx blockstack-cli@1.1.0-beta.1 make_keychain -t > ~/keychain.json
 
-# request tBTC from faucet using btcAddress
-# note: usually takes 1-2 min to complete
+# request tBTC from faucet using btcAddress from keychain
+# note: usually takes 1-2 min to complete, so we will sleep for 1min
 curl -X POST https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/btc\?address\=`jq -r '.keyInfo .btcAddress' ~/keychain.json`
 sleep 60
 
