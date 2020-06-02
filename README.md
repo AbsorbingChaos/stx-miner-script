@@ -12,7 +12,7 @@ Before starting, you will need to install Virtualbox and set up a virtual machin
 
 __ADD IMAGE OF VIRTUAL MACHINE CONFIG HERE__
 
-## Setup
+## Setup and Usage
 
 Once you have a virtual machine up and running with Ubuntu server, the script in this repository is designed to walk through the steps of setting up a miner node, including:
 
@@ -27,6 +27,12 @@ Once you have a virtual machine up and running with Ubuntu server, the script in
 9. download neon miner config file
 10. replace seed with privateKey from keychain
 11. start the miner!
+
+To run the script, you can either [download it manually](https://github.com/AbsorbingChaos/bks-setup-miner/blob/master/config-miner-neon.sh), or use curl:
+
+```
+curl -o- https://raw.githubusercontent.com/AbsorbingChaos/bks-setup-miner/master/config-miner-neon.sh | bash
+```
 
 ## Final Word
 
