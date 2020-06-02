@@ -18,6 +18,8 @@ sudo apt-get install -y build-essential cmake libssl-dev pkg-config jq
 
 # install nvm
 wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+# shellcheck source=src/.nvm/nvm.sh
+source $HOME/.nvm/nvm.sh
 # shellcheck source=src/.bashrc
 source $HOME/.bashrc
 
