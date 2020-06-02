@@ -12,7 +12,7 @@ Before starting, you will need to install Virtualbox and set up a virtual machin
 
 [Step 0: Virtualbox + Ubuntu (Zero to Testnet Series)](https://app.sigle.io/whoabuddy.id.blockstack/6ZSqK6yEwu5bqqGCjOZZH)
 
-![VirtualBox_Blockstack-AutoMiner_02_06_2020_09_19_05](https://user-images.githubusercontent.com/9038904/83544393-a81f9f00-a4b2-11ea-80c4-25e4ed3e9a35.png)
+![Screenshot from 2020-06-02 09-21-11](https://user-images.githubusercontent.com/9038904/83544659-1b291580-a4b3-11ea-8ec9-ffb2cf16d52c.png)
 
 ## Setup and Usage
 
