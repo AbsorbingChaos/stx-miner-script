@@ -7,7 +7,7 @@
 
 ###############
 # INIT SETUP  #
-###############https://raw.githubusercontent.com/AbsorbingChaos/bks-setup-miner/upd/scripts/config-miner-neon.sh
+###############
 
 set -o errexit
 set -o pipefail
