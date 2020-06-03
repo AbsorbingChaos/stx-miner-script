@@ -53,8 +53,9 @@ sed -i "s/replace-with-your-private-key/`jq -r '.keyInfo .privateKey' ~/keychain
 echo '{"id":"stacks","jsonrpc":"2.0","method":"listunspent","params":[0,9999999,["replace-with-btc-address"],false,{"minimumAmount":"0.00000001"}]}' > ~/checkbalance.json
 sed -i "s/replace-with-btc-address/`jq -r '.keyInfo .btcAddress' ~/keychain.json`/g" ~/checkbalance.json
 
-until curl -v --data-binary '@checkbalance.json' -H 'content-type:text/plain;' "http://None:None@35.245.47.179:18443" | grep amount; do
-  printf 'tBTC balance not found - checking again in 3min - this is a good time to get coffee!'
+# old version: curl -v --data-binary '@checkbalance.json' -H 'content-type:text/plain;' "http://None:None@35.245.47.179:18443" | grep amount
+until curl "https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/btc/`jq -r '.keyInfo .btcAddress' ~/keychain.json`" | jq -r .balance > 0; do
+  printf 'tBTC balance not found - checking again in 3min - this is a good time to get coffee!\r\n'
   sleep 180
 done
 
