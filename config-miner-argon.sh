@@ -42,9 +42,8 @@ npx blockstack-cli@1.1.0-beta.1 make_keychain -t > ~/keychain.json
 # note: usually takes 1-2 min to complete, so we will sleep for 1min
 curl -X POST https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/btc\?address\="`jq -r '.keyInfo .btcAddress' ~/keychain.json`"
 
-# download argon miner config file
-# hosted on whoabuddydesign.com using Runkod for now
-curl -L https://whoabuddydesign.com/argon-miner-conf.toml --output ~/stacks-blockchain/testnet/stacks-node/conf/argon-miner-conf.toml
+# download argon miner config file from GitHub repo
+curl -L https://raw.githubusercontent.com/AbsorbingChaos/bks-setup-miner/master/argon-miner-conf.toml --output ~/stacks-blockchain/testnet/stacks-node/conf/argon-miner-conf.toml
 
 # replace seed with privateKey from keychain
 sed -i "s/replace-with-your-private-key/`jq -r '.keyInfo .privateKey' ~/keychain.json`/g" ./stacks-blockchain/testnet/stacks-node/conf/argon-miner-conf.toml
