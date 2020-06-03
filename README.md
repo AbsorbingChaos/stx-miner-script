@@ -26,14 +26,14 @@ Once you have a virtual machine up and running with Ubuntu server, the script in
 6. create a keychain including privateKey and btcAddress
 7. request tBTC from faucet using btcAddress from keychain
 8. pause for 60 seconds to allow transfer of tBTC from faucet
-9. download neon miner config file
+9. download argon miner config file
 10. replace seed with privateKey from keychain
 11. start the miner!
 
-To run the script, you can either [download it manually](https://github.com/AbsorbingChaos/bks-setup-miner/blob/master/config-miner-neon.sh), or use curl:
+To run the script, you can either [download it manually](https://github.com/AbsorbingChaos/bks-setup-miner/blob/master/config-miner-argon.sh), or use curl:
 
 ```
-curl -o- https://raw.githubusercontent.com/AbsorbingChaos/bks-setup-miner/master/config-miner-neon.sh | bash
+curl -o- https://raw.githubusercontent.com/AbsorbingChaos/bks-setup-miner/master/config-miner-argon.sh | bash
 ```
 
 ## Final Word
