@@ -25,10 +25,10 @@ Once you have a virtual machine up and running with Ubuntu server, the script in
 5. clone stacks-blockchain repo
 6. create a keychain including privateKey and btcAddress
 7. request tBTC from faucet using btcAddress from keychain
-8. pause for 60 seconds to allow transfer of tBTC from faucet
-9. download argon miner config file
-10. replace seed with privateKey from keychain
-11. start the miner!
+8. download argon miner config file
+9. replace seed with privateKey from keychain
+10. Check for tBTC balance before starting the miner
+11. start the miner! get the STX!
 
 To run the script, you can either [download it manually](https://github.com/AbsorbingChaos/bks-setup-miner/blob/master/config-miner-argon.sh), or use curl:
 
