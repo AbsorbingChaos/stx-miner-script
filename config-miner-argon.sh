@@ -85,7 +85,8 @@ else
 fi
 
 # tBTC balance check
-if $(curl "https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)" | jq -r .balance) -gt 0; then
+btc_balance=$(curl "https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)" | jq -r .balance)
+if $btc_balance -gt 0; then
   printf '\e[1;32m%-6s\e[m\n' "SCRIPT: tBTC balance detected. skipping faucet request."
 else
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: tBTC balance not found, requesting from faucet."
@@ -107,9 +108,11 @@ fi
 
 # check the tBTC balance before starting the miner
 # otherwise those UTXOs might not exist!
-until $(curl "https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)" | jq -r .balance) -gt 0; do
-  printf '\e[1;31m%-6s\e[m\n' "SCRIPT: tBTC balance not found - checking again in 3min - this is a good time to get coffee!\r\n"
+btc_balance=$(curl "https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)" | jq -r .balance)
+until $btc_balance -gt 0; do
+  printf '\e[1;31m%-6s\e[m\n' "SCRIPT: tBTC balance not found - checking again in 3min - this is a good time to get coffee!"
   sleep 180
+  btc_balance=$(curl "https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)" | jq -r .balance)
 done
 
 printf '\e[1;32m%-6s\e[m\n' "SCRIPT: All checks passed, starting Blockstack Argon miner!"
