@@ -94,7 +94,7 @@ else
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: tBTC balance not found, requesting from faucet."
   # request tBTC from faucet using btcAddress from keychain
   # usually takes 1-2 minutes
-  # curl -X POST https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/btc\?address\="$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)"
+  curl -X POST https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/btc\?address\="$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)"
 fi
 
 # Argon miner config file
