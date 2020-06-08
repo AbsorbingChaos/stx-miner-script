@@ -25,7 +25,7 @@ sudo apt-get update
 sudo apt-get install -y build-essential cmake libssl-dev pkg-config jq
 
 # Node Version Manager (nvm)
-if command -v nvm > /dev/null; then
+if [ -d $HOME/.nvm ]; then
   printf '\e[1;32m%-6s\e[m\n' "SCRIPT: NVM detected."
 else
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: NVM not found, installing."
