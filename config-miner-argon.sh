@@ -22,7 +22,7 @@ set -o nounset
 
 # Ubuntu software prerequisites
 sudo apt-get update
-sudo apt-get install -y build-essential cmake libssl-dev pkg-config jq
+sudo apt-get install -y build-essential cmake libssl-dev pkg-config jq git curl
 
 # Node Version Manager (nvm)
 if [ -d $HOME/.nvm ]; then
