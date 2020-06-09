@@ -1,43 +1,54 @@
-# Setting up a Blockstack Miner
+# Setting up a Miner Node
 
-This repository contains a setup script to help automate (and hopefully simplify) the installation process outlined in my blog post:
+![Testnet Phase Argon Badge](https://img.shields.io/badge/Phase-Argon-9cf)
 
-[Step 2: Running a Miner Node (Zero to Testnet Series)](https://app.sigle.io/whoabuddy.id.blockstack/Lqq5_aeI1A06l_FQ8s9Jv)
-
-Youtube video of the process: https://www.youtube.com/watch?v=VcqrxFW9HEQ
+This repository contains a handy script that will help you run a Miner Node on the [Blockstack Stacks 2.0 Testnet](https://testnet.blockstack.org/)!
 
 ## Requirements
 
-Before starting, you will need to install Virtualbox and set up a virtual machine running Ubuntu Server. The specifications I used are listed below, and more information on this process can be found in the first part of my blog series:
+This script is designed for and tested on [Ubuntu Server 20.04 LTS](https://ubuntu.com/server). In theory, it should work for any Ubuntu-based installation but [YMMV](https://dictionary.cambridge.org/us/dictionary/english/ymmv).
 
-[Step 0: Virtualbox + Ubuntu (Zero to Testnet Series)](https://app.sigle.io/whoabuddy.id.blockstack/6ZSqK6yEwu5bqqGCjOZZH)
+Before running the script, I recommend setting up a virtual machine using [Virtualbox](https://www.virtualbox.org/).
+
+A step by step walkthrough of installing Virtualbox and setting up the Ubuntu Server virtual machine can be found at the link below as part of the [Zero to Testnet Blog Series](https://app.sigle.io/whoabuddy.id.blockstack/):
+
+- [Step 0: Virtualbox + Ubuntu (Zero to Testnet Series)](https://app.sigle.io/whoabuddy.id.blockstack/6ZSqK6yEwu5bqqGCjOZZH)
+
+The specifications I used for my Ubuntu Server virtual machine are listed and pictured below:
+
+- Base Memory: 1024 MB (1gb RAM)
+- Video Memory: 16 MB
+- Hard Drive: 100 GB
+- Network: Bridged Adapter
 
 ![Screenshot from 2020-06-02 09-21-11](https://user-images.githubusercontent.com/9038904/83544659-1b291580-a4b3-11ea-8ec9-ffb2cf16d52c.png)
 
-## Setup and Usage
+## Using the Script
 
-Once you have a virtual machine up and running with Ubuntu server, the script in this repository is designed to walk through the steps of setting up a miner node, including:
-
-1. install prerequisites
-2. install nvm
-3. install node via nvm
-4. install rust
-5. clone stacks-blockchain repo
-6. create a keychain including privateKey and btcAddress
-7. request tBTC from faucet using btcAddress from keychain
-8. download argon miner config file
-9. replace seed with privateKey from keychain
-10. Check for tBTC balance before starting the miner
-11. start the miner! win sortitions!
-
-To run the script, you can either [download it manually](https://github.com/AbsorbingChaos/bks-setup-miner/blob/master/config-miner-argon.sh), or use curl:
+To run the script, simply use the command below, it will download the file from this repository and run it using `bash`.
 
 ```
 curl -o- https://raw.githubusercontent.com/AbsorbingChaos/bks-setup-miner/master/config-miner-argon.sh | bash
 ```
 
+The script can be run multiple times, and will check for and complete the following tasks:
+
+1. Install or update operating system prerequisites `build-essential cmake libssl-dev pkg-config jq`
+2. Detect or install node version manager (nvm)
+3. Detect or install Node.js (via nvm)
+4. Detect or install Rust (via rustup.rs)
+5. Download or update the stacks-blockchain repository (via git)
+6. Detect or create the keychain file (via blockstack-cli make_keychain)
+7. Detect or request tBTC balance (via keychain file and [faucet](https://testnet.blockstack.org/faucet))
+8. Detect or download miner configuration file (via GitHub)
+    - If the miner configuration file is downloaded, automatically inserts the private key (via keychain file)
+9. Check tBTC balance before starting the miner process
+10. Start the miner and try to win the sortitions!
+
+This link will allow you to [manually view or download the script](https://github.com/AbsorbingChaos/bks-setup-miner/blob/master/config-miner-argon.sh).
+
 ## Final Word
 
-Please note that this script is released under the [MIT License](LICENSE), and designed to be run on a freshly installed virtual machine. __Please only run this script on a virtual machine setup for the purpose of mining on the Blockstack Testnet, and please do not run this script on any system used in production.__
+Please note that this script is released under the [MIT License](LICENSE). __Please only run this script on a virtual machine setup for the purpose of mining on the Blockstack Stacks 2.0 Testnet, and please do not run this script on any system used in production.__
 
 __*THIS IS FOR TESTING PURPOSES ONLY!*__
