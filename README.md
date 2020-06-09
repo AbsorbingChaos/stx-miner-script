@@ -6,7 +6,9 @@ This repository contains a handy script that will help you run a Miner Node on t
 
 ## Requirements
 
-This script is designed for and tested on [Ubuntu Server 20.04 LTS](https://ubuntu.com/server). In theory, it should work for any Ubuntu-based installation but [YMMV](https://dictionary.cambridge.org/us/dictionary/english/ymmv).
+This script is designed for and tested on [Ubuntu Server 20.04 LTS](https://ubuntu.com/server).
+
+In theory, it should work for any Ubuntu-based installation but [YMMV](https://dictionary.cambridge.org/us/dictionary/english/ymmv).
 
 Before running the script, I recommend setting up a virtual machine using [Virtualbox](https://www.virtualbox.org/).
 
@@ -25,7 +27,7 @@ The specifications I used for my Ubuntu Server virtual machine are listed and pi
 
 ## Using the Script
 
-To run the script, simply use the command below, it will download the file from this repository and run it using `bash`.
+To run the script, simply use the command below! It will download the file from this repository and run it using `bash`.
 
 ```
 curl -o- https://raw.githubusercontent.com/AbsorbingChaos/bks-setup-miner/master/config-miner-argon.sh | bash
@@ -45,10 +47,12 @@ The script can be run multiple times, and will check for and complete the follow
 9. Check tBTC balance before starting the miner process
 10. Start the miner and try to win the sortitions!
 
-This link will allow you to [manually view or download the script](https://github.com/AbsorbingChaos/bks-setup-miner/blob/master/config-miner-argon.sh).
+This link will allow you to [manually view or download the script](https://github.com/AbsorbingChaos/bks-setup-miner/blob/master/config-miner-argon.sh), if you are into that kind of thing.
 
 ## Final Word
 
 Please note that this script is released under the [MIT License](LICENSE). __Please only run this script on a virtual machine setup for the purpose of mining on the Blockstack Stacks 2.0 Testnet, and please do not run this script on any system used in production.__
 
 __*THIS IS FOR TESTING PURPOSES ONLY!*__
+
+If you run into any issues with the script or have any general questions about the process, feel free to [file an issue here](https://github.com/AbsorbingChaos/bks-setup-miner/issues), or reach out to me via the [Blockstack Discord channel](https://community.blockstack.org/discord) @whoabuddy.
