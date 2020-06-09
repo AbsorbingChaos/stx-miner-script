@@ -95,6 +95,7 @@ else
   # request tBTC from faucet using btcAddress from keychain
   # usually takes 1-2 minutes
   curl -X POST https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/btc\?address\="$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)"
+  printf '\n'
 fi
 
 # Argon miner config file
@@ -104,6 +105,7 @@ else
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: Argon config file not found, downloading."
   # download argon miner config file from GitHub repo
   curl https://raw.githubusercontent.com/AbsorbingChaos/bks-setup-miner/master/argon-miner-conf.toml --output $HOME/stacks-blockchain/testnet/stacks-node/conf/argon-miner-conf.toml
+  printf '\e[1;31m%-6s\e[m\n' "SCRIPT: Adding private key to Argon config file."
   # replace seed with privateKey from keychain
   sed -i "s/replace-with-your-private-key/$(jq -r '.keyInfo .privateKey' $HOME/keychain.json)/g" ./stacks-blockchain/testnet/stacks-node/conf/argon-miner-conf.toml
 fi
@@ -114,8 +116,8 @@ btc_balance=$(curl "https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/bt
 btc_balance=$(echo $btc_balance*1000 | bc)
 btc_balance=$(echo ${btc_balance%.*})
 until [[ "$btc_balance" -gt "0" ]]; do
-  printf '\e[1;31m%-6s\e[m\n' "SCRIPT: tBTC balance not found - checking again in 3min - this is a good time to get coffee!"
-  sleep 180
+  printf '\e[1;31m%-6s\e[m\n' "SCRIPT: tBTC balance not found - checking again in 1min - this is a good time to get coffee!"
+  sleep 60
   btc_balance=$(curl "https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)" | jq -r .balance)
   btc_balance=$(echo $btc_balance*1000 | bc)
   btc_balance=$(echo ${btc_balance%.*})
