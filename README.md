@@ -35,7 +35,7 @@ curl -o- https://raw.githubusercontent.com/AbsorbingChaos/bks-setup-miner/master
 
 The script can be run multiple times, and will check for and complete the following tasks:
 
-1. Install or update operating system prerequisites `build-essential cmake libssl-dev pkg-config jq`
+1. Install or update operating system prerequisites `build-essential cmake libssl-dev pkg-config jq git`
 2. Detect or install node version manager (nvm)
 3. Detect or install Node.js (via nvm)
 4. Detect or install Rust (via rustup.rs)
