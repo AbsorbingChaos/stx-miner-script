@@ -120,8 +120,8 @@ btc_balance=$(curl "https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/bt
 btc_balance=$(echo $btc_balance*1000 | bc)
 btc_balance=$(echo ${btc_balance%.*})
 until [[ "$btc_balance" -gt "0" ]]; do
-  printf '\e[1;31m%-6s\e[m\n' "SCRIPT: test BTC balance not found - checking again in 1 minute."
-  sleep 60
+  printf '\e[1;31m%-6s\e[m\n' "SCRIPT: test BTC balance not found - checking again in 30 seconds."
+  sleep 30
   btc_balance=$(curl "https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)" | jq -r .balance)
   btc_balance=$(echo $btc_balance*1000 | bc)
   btc_balance=$(echo ${btc_balance%.*})
