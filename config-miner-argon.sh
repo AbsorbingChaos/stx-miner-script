@@ -21,7 +21,7 @@ set -o nounset
 # PRE-REQUISUITES #
 ###################
 
-printf '\e[1;34m%-6s\e[m\n' "SCRIPT: STARTING MINER SETUP."
+printf '\e[1;34m%-6s\e[m\n' "SCRIPT: STARTING BLOCKSTACK ARGON MINER SETUP."
 
 # Ubuntu software prerequisites
 printf '\e[1;32m%-6s\e[m\n' "SCRIPT: Running apt-get for OS pre-reqs."
@@ -127,7 +127,7 @@ until [[ "$btc_balance" -gt "0" ]]; do
   btc_balance=$(echo ${btc_balance%.*})
 done
 
-printf '\e[1;32m%-6s\e[m\n' "SCRIPT: All checks passed, starting Blockstack Argon miner!"
+printf '\e[1;32m%-6s\e[m\n\n' "SCRIPT: All checks passed, starting Blockstack Argon miner!"
 # change working directory to stacks-blockchain folder
 cd $HOME/stacks-blockchain
 # start the miner!
