@@ -3,6 +3,7 @@
 # Script created 2020-06-02 by WhoaBuddy
 # Revised on 2020-06-03 for ARGON (Phase 2)
 # Revised on 2020-06-08 to add checks and balances
+# Revised on 2020-07-06 with minor changes
 # Hosted on GitHub by AbsorbingChaos
 # Link: https://github.com/AbsorbingChaos/bks-setup-miner
 # Based on Bash3 Boilerplate. Copyright (c) 2014, kvz.io
@@ -20,7 +21,10 @@ set -o nounset
 # PRE-REQUISUITES #
 ###################
 
+printf '\e[1;34m%-6s\e[m\n' "SCRIPT: STARTING BLOCKSTACK ARGON MINER SETUP."
+
 # Ubuntu software prerequisites
+printf '\e[1;32m%-6s\e[m\n' "SCRIPT: Running apt-get for OS pre-reqs."
 sudo apt-get update
 sudo apt-get install -y build-essential cmake libssl-dev pkg-config jq git curl
 
@@ -70,7 +74,7 @@ if [ -d "$HOME/stacks-blockchain" ]; then
   # update from github repo
   git pull
 else
-  printf '\e[1;31m%-6s\e[m\n' "SCRIPT: stacks-blockchain directory not found, cloning."
+  printf '\e[1;31m%-6s\e[m\n' "SCRIPT: stacks-blockchain directory not found, cloning via git."
   # clone stacks-blockchain repo
   git clone https://github.com/blockstack/stacks-blockchain.git $HOME/stacks-blockchain
 fi
@@ -79,7 +83,7 @@ fi
 if [ -f "$HOME/keychain.json" ]; then
   printf '\e[1;32m%-6s\e[m\n' "SCRIPT: keychain file detected."
 else
-  printf '\e[1;31m%-6s\e[m\n' "SCRIPT: keychain file not found, creating."
+  printf '\e[1;31m%-6s\e[m\n' "SCRIPT: keychain file not found, creating via blockstack-cli."
   # create a keychain including privateKey and btcAddress
   npx blockstack-cli@1.1.0-beta.1 make_keychain -t > $HOME/keychain.json
 fi
@@ -89,9 +93,9 @@ btc_balance=$(curl "https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/bt
 btc_balance=$(echo $btc_balance*1000 | bc)
 btc_balance=$(echo ${btc_balance%.*})
 if [[ "$btc_balance" -gt "0" ]]; then
-  printf '\e[1;32m%-6s\e[m\n' "SCRIPT: tBTC balance detected. skipping faucet request."
+  printf '\e[1;32m%-6s\e[m\n' "SCRIPT: test BTC balance detected. skipping faucet request."
 else
-  printf '\e[1;31m%-6s\e[m\n' "SCRIPT: tBTC balance not found, requesting from faucet."
+  printf '\e[1;31m%-6s\e[m\n' "SCRIPT: test BTC balance not found, requesting from faucet."
   # request tBTC from faucet using btcAddress from keychain
   # usually takes 1-2 minutes
   curl -X POST https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/btc\?address\="$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)"
@@ -116,14 +120,14 @@ btc_balance=$(curl "https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/bt
 btc_balance=$(echo $btc_balance*1000 | bc)
 btc_balance=$(echo ${btc_balance%.*})
 until [[ "$btc_balance" -gt "0" ]]; do
-  printf '\e[1;31m%-6s\e[m\n' "SCRIPT: tBTC balance not found - checking again in 1min - this is a good time to get coffee!"
-  sleep 60
+  printf '\e[1;31m%-6s\e[m\n' "SCRIPT: test BTC balance not found - checking again in 30 seconds."
+  sleep 30
   btc_balance=$(curl "https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)" | jq -r .balance)
   btc_balance=$(echo $btc_balance*1000 | bc)
   btc_balance=$(echo ${btc_balance%.*})
 done
 
-printf '\e[1;32m%-6s\e[m\n' "SCRIPT: All checks passed, starting Blockstack Argon miner!"
+printf '\e[1;32m%-6s\e[m\n\n' "SCRIPT: All checks passed, starting Blockstack Argon miner!"
 # change working directory to stacks-blockchain folder
 cd $HOME/stacks-blockchain
 # start the miner!
