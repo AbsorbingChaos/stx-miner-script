@@ -33,6 +33,8 @@ To run the script, simply use the command below! It will download the file from 
 curl -o- https://raw.githubusercontent.com/AbsorbingChaos/bks-setup-miner/master/config-miner-argon.sh | bash
 ```
 
+To see a video of the script in action, check out [this YouTube link!](https://youtu.be/rOs8ZqCt_xM)
+
 The script can be run multiple times, and will check for and complete the following tasks:
 
 1. Install or update operating system prerequisites `build-essential cmake libssl-dev pkg-config jq git`
