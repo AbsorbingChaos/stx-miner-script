@@ -88,7 +88,7 @@ else
   npx blockstack-cli@1.1.0-beta.1 make_keychain -t > $HOME/keychain.json
 fi
 
-# tBTC balance check
+# test BTC balance check
 btc_balance=$(curl "https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)" | jq -r .balance)
 btc_balance=$(echo $btc_balance*1000 | bc)
 btc_balance=$(echo ${btc_balance%.*})
@@ -96,7 +96,7 @@ if [[ "$btc_balance" -gt "0" ]]; then
   printf '\e[1;32m%-6s\e[m\n' "SCRIPT: test BTC balance detected. skipping faucet request."
 else
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: test BTC balance not found, requesting from faucet."
-  # request tBTC from faucet using btcAddress from keychain
+  # request test BTC from faucet using btcAddress from keychain
   # usually takes 1-2 minutes
   curl -X POST https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/btc\?address\="$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)"
   printf '\n'
@@ -114,7 +114,7 @@ else
   sed -i "s/replace-with-your-private-key/$(jq -r '.keyInfo .privateKey' $HOME/keychain.json)/g" ./stacks-blockchain/testnet/stacks-node/conf/argon-miner-conf.toml
 fi
 
-# check the tBTC balance before starting the miner
+# check the test BTC balance before starting the miner
 # otherwise those UTXOs might not exist!
 btc_balance=$(curl "https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)" | jq -r .balance)
 btc_balance=$(echo $btc_balance*1000 | bc)
