@@ -21,7 +21,7 @@ set -o nounset
 # PRE-REQUISUITES #
 ###################
 
-printf '\n\e[1;34m%-6s\e[m\n' "SCRIPT: STARTING BLOCKSTACK ARGON MINER SETUP."
+printf '\n\e[1;36m%-6s\e[m\n' "SCRIPT: STARTING BLOCKSTACK ARGON MINER SETUP."
 
 # Ubuntu software prerequisites
 printf '\e[1;32m%-6s\e[m\n' "SCRIPT: Running apt-get for OS pre-reqs."
