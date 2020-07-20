@@ -26,7 +26,7 @@ printf '\n\e[1;36m%-6s\e[m\n' "SCRIPT: STARTING BLOCKSTACK ARGON MINER SETUP."
 # Ubuntu software prerequisites
 printf '\e[1;32m%-6s\e[m\n' "SCRIPT: Running apt-get for OS pre-reqs."
 sudo apt-get update
-sudo apt-get install -y build-essential cmake libssl-dev pkg-config jq git
+sudo apt-get install -y build-essential cmake libssl-dev pkg-config jq git bc
 
 # Node Version Manager (nvm)
 if [ -d $HOME/.nvm ]; then
@@ -35,11 +35,12 @@ else
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: NVM not found, installing."
   # install nvm
   wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
-  # shellcheck source=src/.nvm/nvm.sh
-  source $HOME/.nvm/nvm.sh
-  # shellcheck source=src/.bashrc
-  source $HOME/.bashrc
 fi
+
+# shellcheck source=src/.nvm/nvm.sh
+source $HOME/.nvm/nvm.sh
+# shellcheck source=src/.bashrc
+source $HOME/.bashrc
 
 # Node.js
 if which node > /dev/null; then
@@ -57,9 +58,10 @@ else
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: Rust not found, installing."
   # install rust with defaults
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-  # shellcheck source=src/.cargo/env
-  source $HOME/.cargo/env
 fi
+
+# shellcheck source=src/.cargo/env
+source $HOME/.cargo/env
 
 ########################
 # MINER SETUP / CONFIG #
