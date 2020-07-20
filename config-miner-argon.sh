@@ -26,7 +26,7 @@ printf '\n\e[1;36m%-6s\e[m\n' "SCRIPT: STARTING BLOCKSTACK ARGON MINER SETUP."
 # Ubuntu software prerequisites
 printf '\e[1;32m%-6s\e[m\n' "SCRIPT: Running apt-get for OS pre-reqs."
 sudo apt-get update
-sudo apt-get install -y build-essential cmake libssl-dev pkg-config jq git
+sudo apt-get install -y build-essential cmake libssl-dev pkg-config jq git bc
 
 # Node Version Manager (nvm)
 if [ -d $HOME/.nvm ]; then
