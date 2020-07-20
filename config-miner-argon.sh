@@ -35,11 +35,12 @@ else
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: NVM not found, installing."
   # install nvm
   wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
-  # shellcheck source=src/.nvm/nvm.sh
-  source $HOME/.nvm/nvm.sh
-  # shellcheck source=src/.bashrc
-  source $HOME/.bashrc
 fi
+
+# shellcheck source=src/.nvm/nvm.sh
+source $HOME/.nvm/nvm.sh
+# shellcheck source=src/.bashrc
+source $HOME/.bashrc
 
 # Node.js
 if which node > /dev/null; then
@@ -57,9 +58,10 @@ else
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: Rust not found, installing."
   # install rust with defaults
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-  # shellcheck source=src/.cargo/env
-  source $HOME/.cargo/env
 fi
+
+# shellcheck source=src/.cargo/env
+source $HOME/.cargo/env
 
 ########################
 # MINER SETUP / CONFIG #
