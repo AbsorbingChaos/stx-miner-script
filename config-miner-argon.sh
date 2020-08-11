@@ -169,8 +169,7 @@ if [ "$__debug" == true ];
     __file="bks-miner-$__stamp.txt"
     printf '\e[1;33m%-6s\e[m\n' "DEBUG: terminal output saved to:"
     printf '\e[1;33m%-6s\e[m\n' "DEBUG: $(pwd)/$__file"
-    script $__file
-    BLOCKSTACK_DEBUG=1 RUST_BACKTRACE=full cargo testnet start --config ./testnet/stacks-node/conf/argon-miner-conf.toml
+    script -c "BLOCKSTACK_DEBUG=1 RUST_BACKTRACE=full cargo testnet start --config ./testnet/stacks-node/conf/argon-miner-conf.toml" $__file
   else
     # start the miner!
     cargo testnet start --config ./testnet/stacks-node/conf/argon-miner-conf.toml
