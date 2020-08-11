@@ -30,7 +30,7 @@ if [ "$__action" == "debug" ];
     printf '\n\e[1;33m%-6s\e[m' "SCRIPT: DEBUG MODE ENABLED."
     printf '\n\e[1;33m%-6s\e[m' "DEBUG: script output will be recorded to file,"
     printf '\n\e[1;33m%-6s\e[m' "DEBUG: cargo will be launched with env vars:"
-    printf '\n\e[1;33m%-6s\e[m\n' "DEBUG: BLOCKSTACK_DEBUG=1 and RUST_BACKTRACE=full"
+    printf '\n\e[1;33m%-6s\e[m' "DEBUG: BLOCKSTACK_DEBUG=1 and RUST_BACKTRACE=full"
 fi
 
 ###################
