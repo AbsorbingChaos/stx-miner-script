@@ -17,6 +17,22 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
+# Setup initial variables allowing for different
+# actions in the future, if needed.
+__action="${1:-}"
+__debug=false
+
+# Check if debug options requested and set var
+# and notify user of extra options.
+if [ "$__action" == "debug" ];
+  then
+    __debug=true
+    printf '\n\e[1;33m%-6s\e[m\n' "SCRIPT: DEBUG MODE ENABLED."
+    printf '\n\e[1;33m%-6s\e[m\n' "DEBUG: script output will be recorded to file,"
+    printf '\n\e[1;33m%-6s\e[m\n' "DEBUG: cargo will be launched with env vars:"
+    printf '\n\e[1;33m%-6s\e[m\n' "DEBUG: BLOCKSTACK_DEBUG=1 and RUST_BACKTRACE=full"
+fi
+
 ###################
 # PRE-REQUISUITES #
 ###################
@@ -70,11 +86,23 @@ source $HOME/.cargo/env
 # stacks-blockchain repository
 # https://github.com/blockstack/stacks-blockchain
 if [ -d "$HOME/stacks-blockchain" ]; then
-  printf '\e[1;32m%-6s\e[m\n' "SCRIPT: stacks-blockchain directory detected. updating via git."
-  # switch to directory
-  cd $HOME/stacks-blockchain
-  # update from github repo
-  git pull
+  if [ "$__debug" == true ];
+    then
+      # DEBUG: if true, we want to remove it and download
+      # a fresh copy of the stacks-blockchain repository
+      printf '\e[1;32m%-6s\e[m\n' "DEBUG: stacks-blockchain directory detected. removing."
+      # remove stacks-blockchain local directory
+      rm -rf $HOME/stacks-blockchain
+      printf '\e[1;32m%-6s\e[m\n' "DEBUG: cloning stacks-blockchain directory via git."
+      # clone stacks-blockchain repo
+      git clone https://github.com/blockstack/stacks-blockchain.git $HOME/stacks-blockchain
+  else
+    printf '\e[1;32m%-6s\e[m\n' "SCRIPT: stacks-blockchain directory detected. updating via git."
+    # switch to directory
+    cd $HOME/stacks-blockchain
+    # update from github repo
+    git pull
+  fi
 else
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: stacks-blockchain directory not found, cloning via git."
   # clone stacks-blockchain repo
