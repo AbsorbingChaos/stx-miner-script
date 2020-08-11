@@ -90,10 +90,10 @@ if [ -d "$HOME/stacks-blockchain" ]; then
     then
       # DEBUG: if true, we want to remove it and download
       # a fresh copy of the stacks-blockchain repository
-      printf '\e[1;32m%-6s\e[m\n' "DEBUG: stacks-blockchain directory detected. removing."
+      printf '\e[1;33m%-6s\e[m\n' "DEBUG: stacks-blockchain directory detected. removing."
       # remove stacks-blockchain local directory
       rm -rf $HOME/stacks-blockchain
-      printf '\e[1;32m%-6s\e[m\n' "DEBUG: cloning stacks-blockchain directory via git."
+      printf '\e[1;33m%-6s\e[m\n' "DEBUG: cloning stacks-blockchain directory via git."
       # clone stacks-blockchain repo
       git clone https://github.com/blockstack/stacks-blockchain.git $HOME/stacks-blockchain
   else
@@ -157,8 +157,21 @@ until [[ "$btc_balance" -gt "0" ]]; do
   btc_balance=$(echo ${btc_balance%.*})
 done
 
-printf '\e[1;32m%-6s\e[m\n\n' "SCRIPT: All checks passed, starting Blockstack Argon miner!"
+printf '\e[1;32m%-6s\e[m\n\n' "SCRIPT: All checks passed, starting miner with cargo."
 # change working directory to stacks-blockchain folder
 cd $HOME/stacks-blockchain
-# start the miner!
-cargo testnet start --config ./testnet/stacks-node/conf/argon-miner-conf.toml
+
+if [ "$__debug" == true ];
+  then
+    # DEBUG: if true, record terminal output to a file
+    # and start miner using environment vars for debugging
+    __stamp=$(date +"%Y%m%d-%H%M%S")
+    __file="bks-miner-$__stamp.txt"
+    printf '\e[1;33m%-6s\e[m\n' "DEBUG: terminal output saved to:"
+    printf '\e[1;33m%-6s\e[m\n' "DEBUG: $(pwd)/$__file"
+    script $__file
+    BLOCKSTACK_DEBUG=1 RUST_BACKTRACE=full cargo testnet start --config ./testnet/stacks-node/conf/argon-miner-conf.toml
+  else
+    # start the miner!
+    cargo testnet start --config ./testnet/stacks-node/conf/argon-miner-conf.toml
+fi
