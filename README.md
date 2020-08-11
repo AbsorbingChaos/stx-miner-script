@@ -30,7 +30,7 @@ The specifications I used for my Ubuntu Server virtual machine are listed and pi
 To run the script, simply use the command below! It will download the file from this repository and run it using `bash`.
 
 ```
-curl -o- https://raw.githubusercontent.com/AbsorbingChaos/bks-setup-miner/master/config-miner-argon.sh | bash
+curl -sS -o- https://raw.githubusercontent.com/AbsorbingChaos/bks-setup-miner/master/config-miner-argon.sh | bash
 ```
 
 To see a video of the script in action, check out [this YouTube link!](https://youtu.be/rOs8ZqCt_xM)
