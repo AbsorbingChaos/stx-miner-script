@@ -4,6 +4,20 @@
 
 This repository contains a simple script that will help you run a Miner Node on the [Stacks 2.0 Testnet](https://testnet.blockstack.org/).
 
+<!-- TOC -->
+
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Using the Script](#using-the-script)
+- [Using the Script: Debug Mode](#using-the-script-debug-mode)
+- [Examples / More Info](#examples--more-info)
+  - [Live Demonstration](#live-demonstration)
+  - [Virtual Machine Setup](#virtual-machine-setup)
+- [Final Word](#final-word)
+
+<!-- /TOC -->
+
 ## Requirements
 
 This script is designed for and tested with [Ubuntu Server 20.04 LTS](https://ubuntu.com/server).
