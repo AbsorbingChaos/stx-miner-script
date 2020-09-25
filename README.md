@@ -12,6 +12,7 @@ This repository contains a simple script that will help you run a Miner Node on 
 - [Using the Script](#using-the-script)
 - [Using the Script: Debug Mode](#using-the-script-debug-mode)
 - [Examples / More Info](#examples--more-info)
+  - [Blockchain Status](#blockchain-status)
   - [Live Demonstration](#live-demonstration)
   - [Virtual Machine Setup](#virtual-machine-setup)
 - [Final Word](#final-word)
@@ -80,6 +81,12 @@ In addition to the tasks listed above, this will:
 This file contains a copy of all the terminal output seen on the screen, and is saved if the miner crashes or when the miner is stopped with `ctrl+c`.
 
 ## Examples / More Info
+
+### Blockchain Status
+
+To view the status of the blockchain, click the link below.
+
+http://status.test-blockstack.com/
 
 ### Live Demonstration
 
