@@ -1,6 +1,6 @@
 # Setting up a Miner Node
 
-[![Testnet Phase Argon Badge](https://img.shields.io/static/v1?label=Stacks%202.0%20Testnet%20Phase&message=%232%20Argon&color=9cf&style=for-the-badge)](https://forum.blockstack.org/t/stacks-2-0-testnet-coming-soon/10510)
+[![Testnet Phase Krypton Badge](https://img.shields.io/static/v1?label=Stacks%202.0%20Testnet%20Phase&message=%233%20Krypton&color=9cf&style=for-the-badge)](http://whenmainnet.co)
 
 This repository contains a simple script that will help you run a Miner Node on the [Stacks 2.0 Testnet](https://testnet.blockstack.org/).
 
