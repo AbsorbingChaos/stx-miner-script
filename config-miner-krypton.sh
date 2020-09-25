@@ -118,7 +118,7 @@ else
 fi
 
 # test BTC balance check
-btc_balance=$(curl "https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)" | jq -r .balance)
+btc_balance=$(curl "https://stacks-node-api.krypton.blockstack.org/extended/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)" | jq -r .balance)
 btc_balance=$(echo $btc_balance*1000 | bc)
 btc_balance=$(echo ${btc_balance%.*})
 if [[ "$btc_balance" -gt "0" ]]; then
@@ -127,7 +127,7 @@ else
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: test BTC balance not found, requesting from faucet."
   # request test BTC from faucet using btcAddress from keychain
   # usually takes 1-2 minutes
-  curl -X POST https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/btc\?address\="$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)"
+  curl -X POST https://stacks-node-api.krypton.blockstack.org/extended/v1/faucets/btc\?address\="$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)"
   printf '\n'
 fi
 
@@ -145,13 +145,13 @@ fi
 
 # check the test BTC balance before starting the miner
 # otherwise those UTXOs might not exist!
-btc_balance=$(curl "https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)" | jq -r .balance)
+btc_balance=$(curl "https://stacks-node-api.krypton.blockstack.org/extended/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)" | jq -r .balance)
 btc_balance=$(echo $btc_balance*1000 | bc)
 btc_balance=$(echo ${btc_balance%.*})
 until [[ "$btc_balance" -gt "0" ]]; do
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: test BTC balance not found - checking again in 30 seconds."
   sleep 30
-  btc_balance=$(curl "https://sidecar.staging.blockstack.xyz/sidecar/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)" | jq -r .balance)
+  btc_balance=$(curl "https://stacks-node-api.krypton.blockstack.org/extended/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)" | jq -r .balance)
   btc_balance=$(echo $btc_balance*1000 | bc)
   btc_balance=$(echo ${btc_balance%.*})
 done
