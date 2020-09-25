@@ -25,11 +25,19 @@ __debug=false
 # and notify user of extra options.
 if [ "$__action" == "debug" ];
   then
+    # Set debug variables
     __debug=true
+    __stamp=$(date +"%Y%m%d-%H%M%S")
+    __file="bks-miner-$__stamp.txt"
+    # Notify user that debug mode is enabled
     printf '\n\e[1;33m%-6s\e[m' "SCRIPT: DEBUG MODE ENABLED."
     printf '\n\e[1;33m%-6s\e[m' "DEBUG: script output will be recorded to file,"
+    printf '\n\e[1;33m%-6s\e[m' "DEBUG: $__file"
     printf '\n\e[1;33m%-6s\e[m' "DEBUG: cargo will be launched with env vars:"
-    printf '\n\e[1;33m%-6s\e[m' "DEBUG: BLOCKSTACK_DEBUG=1 and RUST_BACKTRACE=full"
+    printf '\n\e[1;33m%-6s\e[m\n' "DEBUG: BLOCKSTACK_DEBUG=1 and RUST_BACKTRACE=full"
+    # Add warning and prompt user to continue
+    read -rsn1 -p"Press any key to continue . . ."
+    echo
 fi
 
 ###################
@@ -164,8 +172,6 @@ if [ "$__debug" == true ];
   then
     # DEBUG: if true, record terminal output to a file
     # and start miner using environment vars for debugging
-    __stamp=$(date +"%Y%m%d-%H%M%S")
-    __file="bks-miner-$__stamp.txt"
     printf '\e[1;33m%-6s\e[m\n' "DEBUG: terminal output saved to:"
     printf '\e[1;33m%-6s\e[m\n' "DEBUG: $(pwd)/$__file"
     script -c "BLOCKSTACK_DEBUG=1 RUST_BACKTRACE=full cargo testnet start --config ./testnet/stacks-node/conf/krypton-miner-conf.toml" $__file
