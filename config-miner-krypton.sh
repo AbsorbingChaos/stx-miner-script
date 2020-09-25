@@ -25,11 +25,19 @@ __debug=false
 # and notify user of extra options.
 if [ "$__action" == "debug" ];
   then
+    # Set debug variables
     __debug=true
+    __stamp=$(date +"%Y%m%d-%H%M%S")
+    __file="bks-miner-$__stamp.txt"
+    # Notify user that debug mode is enabled
     printf '\n\e[1;33m%-6s\e[m' "SCRIPT: DEBUG MODE ENABLED."
     printf '\n\e[1;33m%-6s\e[m' "DEBUG: script output will be recorded to file,"
+    printf '\n\e[1;33m%-6s\e[m' "DEBUG: $HOME/$__file"
     printf '\n\e[1;33m%-6s\e[m' "DEBUG: cargo will be launched with env vars:"
-    printf '\n\e[1;33m%-6s\e[m' "DEBUG: BLOCKSTACK_DEBUG=1 and RUST_BACKTRACE=full"
+    printf '\n\e[1;33m%-6s\e[m\n' "DEBUG: BLOCKSTACK_DEBUG=1 and RUST_BACKTRACE=full"
+    # Add warning and prompt user to continue
+    read -rsn1 -p"Press any key to continue or CTRL+C to quit . . ."
+    echo
 fi
 
 ###################
@@ -118,7 +126,7 @@ else
 fi
 
 # test BTC balance check
-btc_balance=$(curl "https://stacks-node-api.krypton.blockstack.org/extended/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)" | jq -r .balance)
+btc_balance=$(curl -sS "https://stacks-node-api.krypton.blockstack.org/extended/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)" | jq -r .balance)
 btc_balance=$(echo $btc_balance*1000 | bc)
 btc_balance=$(echo ${btc_balance%.*})
 if [[ "$btc_balance" -gt "0" ]]; then
@@ -127,7 +135,7 @@ else
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: test BTC balance not found, requesting from faucet."
   # request test BTC from faucet using btcAddress from keychain
   # usually takes 1-2 minutes
-  curl -X POST https://stacks-node-api.krypton.blockstack.org/extended/v1/faucets/btc\?address\="$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)"
+  curl -sS -X POST https://stacks-node-api.krypton.blockstack.org/extended/v1/faucets/btc\?address\="$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)"
   printf '\n'
 fi
 
@@ -137,7 +145,7 @@ if [ -f $HOME/stacks-blockchain/testnet/stacks-node/conf/krypton-miner-conf.toml
 else
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: Krypton config file not found, downloading."
   # download krypton miner config file from GitHub repo
-  curl https://raw.githubusercontent.com/AbsorbingChaos/bks-setup-miner/master/krypton-miner-conf.toml --output $HOME/stacks-blockchain/testnet/stacks-node/conf/krypton-miner-conf.toml
+  curl -sS https://raw.githubusercontent.com/AbsorbingChaos/bks-setup-miner/master/krypton-miner-conf.toml --output $HOME/stacks-blockchain/testnet/stacks-node/conf/krypton-miner-conf.toml
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: Adding private key to Krypton config file."
   # replace seed with privateKey from keychain
   sed -i "s/replace-with-your-private-key/$(jq -r '.keyInfo .privateKey' $HOME/keychain.json)/g" ./stacks-blockchain/testnet/stacks-node/conf/krypton-miner-conf.toml
@@ -145,13 +153,13 @@ fi
 
 # check the test BTC balance before starting the miner
 # otherwise those UTXOs might not exist!
-btc_balance=$(curl "https://stacks-node-api.krypton.blockstack.org/extended/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)" | jq -r .balance)
+btc_balance=$(curl -sS "https://stacks-node-api.krypton.blockstack.org/extended/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)" | jq -r .balance)
 btc_balance=$(echo $btc_balance*1000 | bc)
 btc_balance=$(echo ${btc_balance%.*})
 until [[ "$btc_balance" -gt "0" ]]; do
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: test BTC balance not found - checking again in 30 seconds."
   sleep 30
-  btc_balance=$(curl "https://stacks-node-api.krypton.blockstack.org/extended/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)" | jq -r .balance)
+  btc_balance=$(curl -sS "https://stacks-node-api.krypton.blockstack.org/extended/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)" | jq -r .balance)
   btc_balance=$(echo $btc_balance*1000 | bc)
   btc_balance=$(echo ${btc_balance%.*})
 done
@@ -164,11 +172,9 @@ if [ "$__debug" == true ];
   then
     # DEBUG: if true, record terminal output to a file
     # and start miner using environment vars for debugging
-    __stamp=$(date +"%Y%m%d-%H%M%S")
-    __file="bks-miner-$__stamp.txt"
     printf '\e[1;33m%-6s\e[m\n' "DEBUG: terminal output saved to:"
-    printf '\e[1;33m%-6s\e[m\n' "DEBUG: $(pwd)/$__file"
-    script -c "BLOCKSTACK_DEBUG=1 RUST_BACKTRACE=full cargo testnet start --config ./testnet/stacks-node/conf/krypton-miner-conf.toml" $__file
+    printf '\e[1;33m%-6s\e[m\n' "DEBUG: $HOME/$__file"
+    script -c "BLOCKSTACK_DEBUG=1 RUST_BACKTRACE=full cargo testnet start --config ./testnet/stacks-node/conf/krypton-miner-conf.toml" $HOME/$__file
   else
     # start the miner!
     cargo testnet start --config ./testnet/stacks-node/conf/krypton-miner-conf.toml
