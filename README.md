@@ -1,6 +1,6 @@
 # Setting up a Miner Node
 
-[![Testnet Phase Argon Badge](https://img.shields.io/static/v1?label=Stacks%202.0%20Testnet%20Phase&message=%232%20Argon&color=9cf&style=for-the-badge)](https://forum.blockstack.org/t/stacks-2-0-testnet-coming-soon/10510)
+[![Testnet Phase Krypton Badge](https://img.shields.io/static/v1?label=Stacks%202.0%20Testnet%20Phase&message=%233%20Krypton&color=9cf&style=for-the-badge)](http://whenmainnet.co)
 
 This repository contains a simple script that will help you run a Miner Node on the [Stacks 2.0 Testnet](https://testnet.blockstack.org/).
 
@@ -12,6 +12,7 @@ This repository contains a simple script that will help you run a Miner Node on 
 - [Using the Script](#using-the-script)
 - [Using the Script: Debug Mode](#using-the-script-debug-mode)
 - [Examples / More Info](#examples--more-info)
+  - [Blockchain Status](#blockchain-status)
   - [Live Demonstration](#live-demonstration)
   - [Virtual Machine Setup](#virtual-machine-setup)
 - [Final Word](#final-word)
@@ -31,7 +32,7 @@ If you run into an error, please [file an issue](https://github.com/AbsorbingCha
 **To run the script**, simply use the command below.
 
 ```
-curl -sS -o- https://raw.githubusercontent.com/AbsorbingChaos/bks-setup-miner/master/config-miner-argon.sh | bash
+curl -sS -o- https://raw.githubusercontent.com/AbsorbingChaos/bks-setup-miner/master/config-miner-krypton.sh | bash
 ```
 
 It will download the file from this repository and run it via `bash`.
@@ -53,7 +54,7 @@ The script can be run multiple times, and will complete the following tasks:
 9. Check test BTC balance before starting the miner process
 10. Start the miner and try to win the sortitions!
 
-This link will allow you to [manually view or download the script](https://github.com/AbsorbingChaos/bks-setup-miner/blob/master/config-miner-argon.sh), if you are into that kind of thing.
+This link will allow you to [manually view or download the script](https://github.com/AbsorbingChaos/bks-setup-miner/blob/master/config-miner-krypton.sh), as well as [the node configuration file](https://github.com/AbsorbingChaos/bks-setup-miner/blob/master/krypton-miner-conf.toml), if you are into that kind of thing.
 
 ## Using the Script: Debug Mode
 
@@ -62,13 +63,13 @@ This link will allow you to [manually view or download the script](https://githu
 First, download the script:
 
 ```
-curl -sS -O https://raw.githubusercontent.com/AbsorbingChaos/bks-setup-miner/master/config-miner-argon.sh
+curl -sS -O https://raw.githubusercontent.com/AbsorbingChaos/bks-setup-miner/master/config-miner-krypton.sh
 ```
 
 Second, run the script with the `debug` option:
 
 ```
-bash config-miner-argon.sh debug
+bash config-miner-krypton.sh debug
 ```
 
 In addition to the tasks listed above, this will:
@@ -80,6 +81,12 @@ In addition to the tasks listed above, this will:
 This file contains a copy of all the terminal output seen on the screen, and is saved if the miner crashes or when the miner is stopped with `ctrl+c`.
 
 ## Examples / More Info
+
+### Blockchain Status
+
+To view the status of the blockchain, click the link below.
+
+http://status.test-blockstack.com/
 
 ### Live Demonstration
 
