@@ -17,6 +17,12 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
+# Add warning to beginning since this is from an older phase of testnet.
+printf '\n\e[1;31m%-6s\e[m\n' "NOTE: This script was created for a previous phase of the Blockstack Testnet (Argon), and is stored here for historic purposes."
+printf '\e[1;31m%-6s\e[m\n' "Please review the readme for the most updated version."
+read -rsn1 -p"Press any key to continue . . ."
+echo
+
 # Setup initial variables allowing for different
 # actions in the future, if needed.
 __action="${1:-}"
