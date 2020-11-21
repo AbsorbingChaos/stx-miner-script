@@ -148,7 +148,7 @@ else
   curl -sS https://raw.githubusercontent.com/AbsorbingChaos/bks-setup-miner/master/krypton-miner-conf.toml --output $HOME/stacks-blockchain/testnet/stacks-node/conf/krypton-miner-conf.toml
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: Adding private key to Krypton config file."
   # replace seed with privateKey from keychain
-  sed -i "s/replace-with-your-private-key/$(jq -r '.keyInfo .privateKey' $HOME/keychain.json)/g" ./stacks-blockchain/testnet/stacks-node/conf/krypton-miner-conf.toml
+  sed -i "s/replace-with-your-private-key/$(jq -r '.keyInfo .privateKey' $HOME/keychain.json)/g" $HOME/stacks-blockchain/testnet/stacks-node/conf/krypton-miner-conf.toml
 fi
 
 # check the test BTC balance before starting the miner
