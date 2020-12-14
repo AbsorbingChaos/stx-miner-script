@@ -122,7 +122,7 @@ if [ -f "$HOME/keychain.json" ]; then
 else
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: keychain file not found, creating via blockstack-cli."
   # create a keychain including privateKey and btcAddress
-  npx blockstack-cli@1.1.0-beta.1 make_keychain -t > $HOME/keychain.json
+  npx @stacks/cli make_keychain -t > $HOME/keychain.json
 fi
 
 # test BTC balance check
