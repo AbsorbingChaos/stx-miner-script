@@ -107,13 +107,15 @@ if [ -d "$HOME/stacks-blockchain" ]; then
     printf '\e[1;32m%-6s\e[m\n' "SCRIPT: stacks-blockchain directory detected. updating via git."
     # switch to directory
     cd $HOME/stacks-blockchain
-    # update from github repo
-    git pull
+    # pull latest krypton tag from repo
+    git checkout tags/v23.0.0.12-krypton
   fi
 else
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: stacks-blockchain directory not found, cloning via git."
   # clone stacks-blockchain repo
   git clone https://github.com/blockstack/stacks-blockchain.git $HOME/stacks-blockchain
+  # pull latest krypton tag from repo
+  git checkout tags/v23.0.0.12-krypton
 fi
 
 # keychain file with private keys
