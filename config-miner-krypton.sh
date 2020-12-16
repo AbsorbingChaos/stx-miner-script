@@ -147,16 +147,15 @@ else
 fi
 
 # Krypton miner config file
-# CHANGE THIS TO HOME DIRECTORY AS WELL
-if [ -f "$HOME"/stacks-blockchain/testnet/stacks-node/conf/krypton-miner-conf.toml ]; then
+if [ -f "$HOME"/krypton-miner-conf.toml ]; then
   printf '\e[1;32m%-6s\e[m\n' "SCRIPT: Krypton config file detected."
 else
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: Krypton config file not found, downloading."
   # download krypton miner config file from GitHub repo
-  curl -sS https://raw.githubusercontent.com/AbsorbingChaos/bks-setup-miner/master/krypton-miner-conf.toml --output "$HOME"/stacks-blockchain/testnet/stacks-node/conf/krypton-miner-conf.toml
+  curl -sS https://raw.githubusercontent.com/AbsorbingChaos/bks-setup-miner/master/krypton-miner-conf.toml --output "$HOME"/krypton-miner-conf.toml
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: Adding private key to Krypton config file."
   # replace seed with privateKey from keychain
-  sed -i "s/replace-with-your-private-key/$(jq -r '.keyInfo .privateKey' $HOME/keychain.json)/g" "$HOME"/stacks-blockchain/testnet/stacks-node/conf/krypton-miner-conf.toml
+  sed -i "s/replace-with-your-private-key/$(jq -r '.keyInfo .privateKey' $HOME/keychain.json)/g" "$HOME"/krypton-miner-conf.toml
 fi
 
 # check the test BTC balance before starting the miner
@@ -180,8 +179,9 @@ if [ "$__debug" == true ];
     # and start miner using environment vars for debugging
     printf '\e[1;33m%-6s\e[m\n' "DEBUG: terminal output saved to:"
     printf '\e[1;33m%-6s\e[m\n' "DEBUG: $HOME/$__file"
-    script -c "BLOCKSTACK_DEBUG=1 RUST_BACKTRACE=full cargo testnet start --config ./testnet/stacks-node/conf/krypton-miner-conf.toml" "$HOME/$__file"
+    script -c "BLOCKSTACK_DEBUG=1 RUST_BACKTRACE=full cargo testnet start --config $HOME/krypton-miner-conf.toml" "$HOME/$__file"
+
   else
     # start the miner!
-    cargo testnet start --config ./testnet/stacks-node/conf/krypton-miner-conf.toml
+    cargo testnet start --config "$HOME"/krypton-miner-conf.toml
 fi
