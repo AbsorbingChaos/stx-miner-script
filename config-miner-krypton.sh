@@ -46,7 +46,7 @@ printf '\n\e[1;36m%-6s\e[m\n' "SCRIPT: STARTING BLOCKSTACK KRYPTON MINER SETUP."
 
 # Ubuntu software prerequisites
 printf '\e[1;32m%-6s\e[m\n' "SCRIPT: Running sudo apt-get for OS pre-reqs."
-printf '\e[1;32m%-6s\e[m\n' "SCRIPT: Note - admin privileges required."
+printf '\e[1;32m%-6s\e[m\n' "SCRIPT: Admin privileges required."
 sudo apt-get update
 sudo apt-get install -qq build-essential cmake libssl-dev pkg-config jq git bc
 
@@ -134,7 +134,7 @@ btc_balance=$(${btc_balance*1000} | bc)
 btc_balance=${btc_balance%.*}
 printf '\e[1;36m%-6s\e[m\n' "btc_balance: $btc_balance"
 if [[ "$btc_balance" -gt "0" ]]; then
-  printf '\e[1;32m%-6s\e[m\n' "SCRIPT: test BTC balance detected. skipping faucet request."
+  printf '\e[1;32m%-6s\e[m\n' "SCRIPT: test BTC balance: $btc_balance, skipping faucet request."
 else
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: test BTC balance not found, requesting from faucet."
   # request test BTC from faucet using btcAddress from keychain
