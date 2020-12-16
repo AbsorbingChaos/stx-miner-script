@@ -101,7 +101,7 @@ if [ -d "$HOME/stacks-blockchain" ]; then
       rm -rf "$HOME"/stacks-blockchain
       printf '\e[1;33m%-6s\e[m\n' "DEBUG: cloning stacks-blockchain directory via git."
       # clone stacks-blockchain repo
-      git clone https://github.com/blockstack/stacks-blockchain.git "$HOME"/stacks-blockchain
+      git clone -q https://github.com/blockstack/stacks-blockchain.git "$HOME"/stacks-blockchain
     else
       printf '\e[1;32m%-6s\e[m\n' "SCRIPT: stacks-blockchain directory detected. updating via git."
       git pull
