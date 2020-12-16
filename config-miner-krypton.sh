@@ -66,8 +66,7 @@ source "$HOME"/.bashrc
 
 # Node.js
 if which node > /dev/null; then
-  printf '\e[1;32m%-6s\e[m\n' "SCRIPT: Node.js detected, version below."
-  node -v
+  printf '\e[1;32m%-6s\e[m\n' "SCRIPT: Node.js detected, version: $(node -v)"
 else
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: Node.js not found, installing via NVM."
   # install node via nvm
@@ -76,8 +75,7 @@ fi
 
 # Rust
 if which rustc > /dev/null; then
-  printf '\e[1;32m%-6s\e[m\n' "SCRIPT: Rust detected, version below."
-  rustc --version
+  printf '\e[1;32m%-6s\e[m\n' "SCRIPT: Rust detected, version: $(rustc --version)"
 else
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: Rust not found, installing."
   # install rust with defaults
@@ -127,10 +125,8 @@ else
   npx -q @stacks/cli make_keychain -t > "$HOME"/keychain.json
 fi
 # list BTC/STX addresses
-printf '\e[1;32m%-6s\e[m\n' "BTC Address:"
-jq -r '.keyInfo .btcAddress' "$HOME"/keychain.json
-printf '\e[1;32m%-6s\e[m\n' "STX Address:"
-jq -r '.keyInfo .address' "$HOME"/keychain.json
+printf '\e[1;32m%-6s\e[m\n' "BTC Address: $(jq -r '.keyInfo .btcAddress' "$HOME"/keychain.json)"
+printf '\e[1;32m%-6s\e[m\n' "STX Address: $(jq -r '.keyInfo .address' "$HOME"/keychain.json)"
 
 # test BTC balance check
 btc_balance=$(curl -sS "https://stacks-node-api.krypton.blockstack.org/extended/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)" | jq -r .balance)
@@ -180,7 +176,6 @@ if [ "$__debug" == true ];
     printf '\e[1;33m%-6s\e[m\n' "DEBUG: terminal output saved to:"
     printf '\e[1;33m%-6s\e[m\n' "DEBUG: $HOME/$__file"
     script -c "BLOCKSTACK_DEBUG=1 RUST_BACKTRACE=full cargo testnet start --config $HOME/krypton-miner-conf.toml" "$HOME/$__file"
-
   else
     # start the miner!
     cargo testnet start --config "$HOME"/krypton-miner-conf.toml
