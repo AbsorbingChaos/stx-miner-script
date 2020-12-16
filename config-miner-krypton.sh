@@ -28,7 +28,7 @@ if [ "$__action" == "debug" ];
     __stamp=$(date +"%Y%m%d-%H%M%S")
     __file="bks-miner-$__stamp.txt"
     # Notify user that debug mode is enabled
-    printf '\n\e[1;33m%-6s\e[m' "SCRIPT: DEBUG MODE ENABLED."
+    printf '\n\e[1;36m%-6s\e[m' "SCRIPT: DEBUG MODE ENABLED."
     printf '\n\e[1;33m%-6s\e[m' "DEBUG: script output will be recorded to file,"
     printf '\n\e[1;33m%-6s\e[m' "DEBUG: $HOME/$__file"
     printf '\n\e[1;33m%-6s\e[m' "DEBUG: cargo will be launched with env vars:"
