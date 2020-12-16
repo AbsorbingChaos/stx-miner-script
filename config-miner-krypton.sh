@@ -109,11 +109,12 @@ if [ -d "$HOME/stacks-blockchain" ]; then
 else
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: stacks-blockchain directory not found, cloning via git."
   # clone stacks-blockchain repo
-  git clone https://github.com/blockstack/stacks-blockchain.git "$HOME"/stacks-blockchain
+  git clone -q https://github.com/blockstack/stacks-blockchain.git "$HOME"/stacks-blockchain
 fi
 # change to stacks-blockchain directory
 cd "$HOME"/stacks-blockchain
 # checkout tag for latest Krypton build
+printf '\e[1;32m%-6s\e[m\n' "SCRIPT: checkout stacks-blockchain tag v24.0.0.0-xenon."
 git -c advice.detachedHead=false checkout tags/v24.0.0.0-xenon
 
 # keychain file with private keys
