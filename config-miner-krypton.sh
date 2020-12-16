@@ -130,9 +130,8 @@ printf '\e[1;32m%-6s\e[m\n' "STX Address: $(jq -r '.keyInfo .address' "$HOME"/ke
 
 # test BTC balance check
 btc_balance=$(curl -sS "https://stacks-node-api.krypton.blockstack.org/extended/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' "$HOME"/keychain.json)" | jq -r .balance)
-btc_balance=$(${btc_balance*1000} | bc)
+btc_balance=$(echo "$btc_balance"*1000 | bc)
 btc_balance=${btc_balance%.*}
-printf '\e[1;36m%-6s\e[m\n' "btc_balance: $btc_balance"
 if [[ "$btc_balance" -gt "0" ]]; then
   printf '\e[1;32m%-6s\e[m\n' "SCRIPT: test BTC balance: $btc_balance, skipping faucet request."
 else
@@ -159,13 +158,13 @@ fi
 # otherwise those UTXOs might not exist!
 btc_balance=$(curl -sS "https://stacks-node-api.krypton.blockstack.org/extended/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' "$HOME"/keychain.json)" | jq -r .balance)
 btc_balance=$(echo "$btc_balance"*1000 | bc)
-btc_balance=$(echo ${btc_balance%.*})
+btc_balance=${btc_balance%.*}
 until [[ "$btc_balance" -gt "0" ]]; do
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: test BTC balance not found - checking again in 30 seconds."
   sleep 30
   btc_balance=$(curl -sS "https://stacks-node-api.krypton.blockstack.org/extended/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' "$HOME"/keychain.json)" | jq -r .balance)
   btc_balance=$(echo "$btc_balance"*1000 | bc)
-  btc_balance=$(echo ${btc_balance%.*})
+  btc_balance=${btc_balance%.*}
 done
 
 printf '\e[1;32m%-6s\e[m\n\n' "SCRIPT: All checks passed, starting miner with cargo."
