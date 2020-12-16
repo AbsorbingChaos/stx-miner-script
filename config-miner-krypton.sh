@@ -48,7 +48,7 @@ printf '\n\e[1;36m%-6s\e[m\n' "SCRIPT: STARTING BLOCKSTACK KRYPTON MINER SETUP."
 printf '\e[1;32m%-6s\e[m\n' "SCRIPT: Running sudo apt-get for OS pre-reqs."
 printf '\e[1;32m%-6s\e[m\n' "SCRIPT: Note - admin privileges required."
 sudo apt-get update
-sudo apt-get install -y build-essential cmake libssl-dev pkg-config jq git bc
+sudo apt-get install -qq build-essential cmake libssl-dev pkg-config jq git bc
 
 # Node Version Manager (nvm)
 if [ -d "$HOME"/.nvm ]; then
