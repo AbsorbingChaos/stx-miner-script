@@ -116,7 +116,7 @@ fi
 # change to stacks-blockchain directory
 cd "$HOME"/stacks-blockchain
 # checkout tag for latest Krypton build
-git checkout tags/v24.0.0.0-xenon
+git -c advice.detachedHead=false checkout tags/v24.0.0.0-xenon
 
 # keychain file with private keys
 if [ -f "$HOME/keychain.json" ]; then
