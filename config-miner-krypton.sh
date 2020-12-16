@@ -129,16 +129,17 @@ printf '\e[1;32m%-6s\e[m\n' "BTC Address: $(jq -r '.keyInfo .btcAddress' "$HOME"
 printf '\e[1;32m%-6s\e[m\n' "STX Address: $(jq -r '.keyInfo .address' "$HOME"/keychain.json)"
 
 # test BTC balance check
-btc_balance=$(curl -sS "https://stacks-node-api.krypton.blockstack.org/extended/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)" | jq -r .balance)
-btc_balance=$(echo $btc_balance*1000 | bc)
-btc_balance=$(echo ${btc_balance%.*})
+btc_balance=$(curl -sS "https://stacks-node-api.krypton.blockstack.org/extended/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' "$HOME"/keychain.json)" | jq -r .balance)
+btc_balance=$(${btc_balance*1000} | bc)
+btc_balance=${btc_balance%.*}
+printf '\e[1;36m%-6s\e[m\n' "btc_balance: $btc_balance"
 if [[ "$btc_balance" -gt "0" ]]; then
   printf '\e[1;32m%-6s\e[m\n' "SCRIPT: test BTC balance detected. skipping faucet request."
 else
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: test BTC balance not found, requesting from faucet."
   # request test BTC from faucet using btcAddress from keychain
   # usually takes 1-2 minutes
-  curl -sS -X POST https://stacks-node-api.krypton.blockstack.org/extended/v1/faucets/btc\?address\="$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)"
+  curl -sS -X POST "https://stacks-node-api.krypton.blockstack.org/extended/v1/faucets/btc?address=$(jq -r '.keyInfo .btcAddress' "$HOME"/keychain.json)"
   printf '\n'
 fi
 
@@ -151,19 +152,19 @@ else
   curl -sS https://raw.githubusercontent.com/AbsorbingChaos/bks-setup-miner/master/krypton-miner-conf.toml --output "$HOME"/krypton-miner-conf.toml
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: Adding private key to Krypton config file."
   # replace seed with privateKey from keychain
-  sed -i "s/replace-with-your-private-key/$(jq -r '.keyInfo .privateKey' $HOME/keychain.json)/g" "$HOME"/krypton-miner-conf.toml
+  sed -i "s/replace-with-your-private-key/$(jq -r '.keyInfo .privateKey' "$HOME"/keychain.json)/g" "$HOME"/krypton-miner-conf.toml
 fi
 
 # check the test BTC balance before starting the miner
 # otherwise those UTXOs might not exist!
-btc_balance=$(curl -sS "https://stacks-node-api.krypton.blockstack.org/extended/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)" | jq -r .balance)
-btc_balance=$(echo $btc_balance*1000 | bc)
+btc_balance=$(curl -sS "https://stacks-node-api.krypton.blockstack.org/extended/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' "$HOME"/keychain.json)" | jq -r .balance)
+btc_balance=$(echo "$btc_balance"*1000 | bc)
 btc_balance=$(echo ${btc_balance%.*})
 until [[ "$btc_balance" -gt "0" ]]; do
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: test BTC balance not found - checking again in 30 seconds."
   sleep 30
-  btc_balance=$(curl -sS "https://stacks-node-api.krypton.blockstack.org/extended/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' $HOME/keychain.json)" | jq -r .balance)
-  btc_balance=$(echo $btc_balance*1000 | bc)
+  btc_balance=$(curl -sS "https://stacks-node-api.krypton.blockstack.org/extended/v1/faucets/btc/$(jq -r '.keyInfo .btcAddress' "$HOME"/keychain.json)" | jq -r .balance)
+  btc_balance=$(echo "$btc_balance"*1000 | bc)
   btc_balance=$(echo ${btc_balance%.*})
 done
 
