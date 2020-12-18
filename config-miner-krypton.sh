@@ -154,6 +154,11 @@ else
   # replace seed with privateKey from keychain
   sed -i "s/replace-with-your-private-key/$(jq -r '.keyInfo .privateKey' "$HOME"/keychain.json)/g" "$HOME"/krypton-miner-conf.toml
 fi
+if grep -q "ustx" krypton-miner-conf.toml; then 
+  # replace ustx with mstx in config file
+  printf '\e[1;31m%-6s\e[m\n' "SCRIPT: Changing ustx to mstx in config."
+  sed -i "s/ustx/mstx/g" "$HOME"/krypton-miner-conf.toml
+fi
 
 # check the test BTC balance before starting the miner
 # otherwise those UTXOs might not exist!
