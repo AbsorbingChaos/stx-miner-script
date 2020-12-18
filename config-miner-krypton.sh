@@ -102,11 +102,12 @@ if [ -d "$HOME/stacks-blockchain" ]; then
       printf '\e[1;33m%-6s\e[m\n' "DEBUG: cloning stacks-blockchain directory via git."
       # clone stacks-blockchain repo
       git clone -q https://github.com/blockstack/stacks-blockchain.git "$HOME"/stacks-blockchain
-    else
+    ## else
       # change to stacks-blockchain directory
-      cd "$HOME"/stacks-blockchain
-      printf '\e[1;32m%-6s\e[m\n' "SCRIPT: stacks-blockchain directory detected. updating via git."
-      git pull
+      # cd "$HOME"/stacks-blockchain
+      # printf '\e[1;32m%-6s\e[m\n' "SCRIPT: stacks-blockchain directory detected. updating via git."
+      # git pull
+      # REMOVED since Krypton requires tag 24.0.0.0-xenon so git pull is not necessary
   fi
 else
   printf '\e[1;31m%-6s\e[m\n' "SCRIPT: stacks-blockchain directory not found, cloning via git."
