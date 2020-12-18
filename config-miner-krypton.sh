@@ -103,6 +103,8 @@ if [ -d "$HOME/stacks-blockchain" ]; then
       # clone stacks-blockchain repo
       git clone -q https://github.com/blockstack/stacks-blockchain.git "$HOME"/stacks-blockchain
     else
+      # change to stacks-blockchain directory
+      cd "$HOME"/stacks-blockchain
       printf '\e[1;32m%-6s\e[m\n' "SCRIPT: stacks-blockchain directory detected. updating via git."
       git pull
   fi
